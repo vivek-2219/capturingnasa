@@ -48,27 +48,7 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  animation-name: none;
-  animation-duration: 0.8s;
-  animation-timing-function: ease-in-out;
-}
-
-@keyframes openAnimation {
-  0%{
-    top: -100%;
-  }
-  100%{
-    top: 50%;
-  }
-}
-
-@keyframes closeAnimation {
-  0%{
-    top: 50%;
-  }
-  100%{
-    top: -100%;
-  }
+  transition: all 1s ease-in-out;
 }
 
 

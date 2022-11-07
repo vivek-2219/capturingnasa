@@ -26,11 +26,11 @@ function App() {
           <Navbar />
           <Router>
             <Routes>
-              <Route path='/' element={<Home key={API_KEY} />} />
-              <Route path='/apod' element={<APODRoute key={API_KEY} />} />
-              <Route path='/asteroid' element={<Asteroid key={API_KEY} />} />
-              <Route path='/donki' element={<Donki key={API_KEY} />} />
-              <Route path='/about' element={<About key={API_KEY} />} />
+              <Route path='/' element={<Home />} />
+              <Route path='/apod' element={<APODRoute />} />
+              <Route path='/asteroid' element={<Asteroid />} />
+              <Route path='/donki' element={<Donki />} />
+              <Route path='/about' element={<About />} />
             </Routes>
           </Router>
           <Footer />

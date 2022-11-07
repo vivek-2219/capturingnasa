@@ -2,12 +2,19 @@ import { useEffect, useState } from "react";
 import AsteroidContext from "./asteroidContext";
 
 const AsteroidState = (props) => {
+    const API_KEY = process.env.REACT_APP_NASA_KEY;
+    
     const [asteroidLoading, setAsteroidLoading] = useState('block');
     const [asteroidData, setAsteroidData] = useState('');
+    
     let d = new Date();
+    let date = new Date();
+    let m = 0;
+    const monthsObj = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    
     const fetchNeoWs = async () => {
         setAsteroidLoading('block');
-        const neoWsResponse = await fetch(`https://api.nasa.gov/neo/rest/v1/feed?api_key=VovcfG0JJR8fgeAWu5b8KMj18cRIB0VGFOjMG2Tb&start_date=${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}&end_date=${d.getFullYear()}-${d.getMonth()+1}-${d.getDate() + 2}`);
+        const neoWsResponse = await fetch(`https://api.nasa.gov/neo/rest/v1/feed?api_key=${API_KEY}&start_date=${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}&end_date=${d.getFullYear()}-${d.getMonth()+1}-${d.getDate() + 7}`);
         try {
             setAsteroidLoading('none');
             const response = await neoWsResponse.json();

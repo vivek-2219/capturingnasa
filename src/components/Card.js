@@ -8,15 +8,17 @@ const Card = (props) => {
     const { image, title, explanation, date } = props;
 
     const handleData = () => {
+        let s = window.scrollY;
         if (displayChanger === 'none') {
             setDisplayChanger('flex');
             setButtonText('Close');
+            window.scroll(0, 0);
         }
         else {
             setDisplayChanger('none');
             setButtonText('Read More ...');
-        }
-    }
+        };
+    };
     return (
         <>
             <div className="card m-3" style={{ width: '18rem' }}>
