@@ -3,18 +3,37 @@ import AsteroidContext from "./asteroidContext";
 
 const AsteroidState = (props) => {
     const API_KEY = process.env.REACT_APP_NASA_KEY;
-    
+
     const [asteroidLoading, setAsteroidLoading] = useState('block');
     const [asteroidData, setAsteroidData] = useState('');
-    
+
     let d = new Date();
     let date = new Date();
     let m = 0;
-    const monthsObj = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    
+    let monthsArr = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    let inputMonth = 0;
+
     const fetchNeoWs = async () => {
+        if (date.getFullYear() % 4 === 0) {
+            monthsArr = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        }
+        else {
+            monthsArr = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        };
+
+        if (d.getDate() + 7 > monthsArr[m - 1]) {
+            inputMonth = (d.getMonth() + 1) % 12;
+            m = monthsArr[d.getMonth() % 12];
+            d = d.getDate() + 7 - m;
+        }
+        else {
+            d = d.getDate() + 7;
+            inputMonth = date.getMonth();
+        };
+        console.log(`Start Date is ${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} and End Date is${date.getFullYear()}-${inputMonth + 1}-${d}`);
+
         setAsteroidLoading('block');
-        const neoWsResponse = await fetch(`https://api.nasa.gov/neo/rest/v1/feed?api_key=${API_KEY}&start_date=${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}&end_date=${d.getFullYear()}-${d.getMonth()+1}-${d.getDate() + 7}`);
+        const neoWsResponse = await fetch(`https://api.nasa.gov/neo/rest/v1/feed?api_key=${API_KEY}&start_date=${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}&end_date=${date.getFullYear()}-${inputMonth + 1}-${d}`);
         try {
             setAsteroidLoading('none');
             const response = await neoWsResponse.json();

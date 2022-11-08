@@ -10,6 +10,7 @@ const CardState = (props) => {
     let date = new Date();
     let m = 0;
     let monthsArr = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    let inputMonth = 0;
 
     const fetchApodData = async () => {
         if (date.getFullYear() % 4 === 0) {
@@ -20,15 +21,16 @@ const CardState = (props) => {
         };
 
         if (d.getDate() < 7) {
+            inputMonth = (d.getMonth() + 11) % 12;
             m = monthsArr[(d.getMonth() + 10) % 12];
             d = m + (d.getDate() - 7) + 1;
-            console.log(d, m);
         }
         else {
             d = d.getDate();
+            inputMonth = date.getMonth();
         }
         setApodLoading('block');
-        const apodResponse = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${API_KEY}&start_date=${date.getFullYear()}-${date.getMonth()}-${d}`);
+        const apodResponse = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${API_KEY}&start_date=${date.getFullYear()}-${inputMonth}-${d}`);
         const dataArr = [];
         try {
             setApodLoading('none');
