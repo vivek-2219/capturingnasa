@@ -16,26 +16,29 @@ import AsteroidState from './context/envelope/AsteroidState';
 import Footer from './components/Footer';
 import Donki from './components/DonkiRoute/Donki';
 import APODRoute from './components/apod/APODRoute';
+import EPICState from './context/envelope/EPICState';
 
 function App() {
   const API_KEY = 'VovcfG0JJR8fgeAWu5b8KMj18cRIB0VGFOjMG2Tb';
   return (
     <>
-      <CardState>
-        <AsteroidState>
-          <Navbar />
-          <Router>
-            <Routes>
-              <Route path='/' element={<Home />} />
-              <Route path='/apod' element={<APODRoute />} />
-              <Route path='/asteroid' element={<Asteroid />} />
-              <Route path='/donki' element={<Donki />} />
-              <Route path='/about' element={<About />} />
-            </Routes>
-          </Router>
-          <Footer />
-        </AsteroidState>
-      </CardState>
+      <EPICState>
+        <CardState>
+          <AsteroidState>
+            <Navbar />
+            <Router>
+              <Routes>
+                <Route path='/' element={<Home />} />
+                <Route path='/apod' element={<APODRoute />} />
+                <Route path='/asteroid' element={<Asteroid />} />
+                <Route path='/donki' element={<Donki />} />
+                <Route path='/about' element={<About />} />
+              </Routes>
+            </Router>
+            {/* <Footer /> */}
+          </AsteroidState>
+        </CardState>
+      </EPICState>
     </>
   );
 }

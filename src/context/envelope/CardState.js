@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import CardContext from './cardContext';
 
 const CardState = (props) => {
+    // Getting the API key from the environment variables.
     const API_KEY = process.env.REACT_APP_NASA_KEY;
+
     const [apodLoading, setApodLoading] = useState('block');
     const [cardData, setCardData] = useState('');
 
+    // Variables to configure date object in JS.
     let d = new Date();
     let date = new Date();
     let m = 0;
@@ -14,6 +17,7 @@ const CardState = (props) => {
     let inputYear = 0;
 
     const fetchApodData = async () => {
+        // Logic for changing the date according to the leap year or general year.
         if (d.getFullYear() % 4 === 0) {
             monthsArr = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
         }
@@ -21,6 +25,7 @@ const CardState = (props) => {
             monthsArr = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
         };
 
+        // Logic for going 7 days ago.
         if (d.getDate() < 7) {
             if (d.getMonth() === 0) {
                 inputYear = d.getFullYear() - 1;
@@ -38,11 +43,15 @@ const CardState = (props) => {
             inputMonth = date.getMonth();
             inputYear = date.getFullYear();
         }
-        setApodLoading('block');
+
+        setApodLoading('block'); // Showing the loading circle when content is loading.
+
+        // Main logic starts here.
+        // Fetching data using API.
         const apodResponse = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${API_KEY}&start_date=${inputYear}-${inputMonth}-${d}`);
         const dataArr = [];
         try {
-            setApodLoading('none');
+            setApodLoading('none'); // Hiding the loading circle when content loading is completed.
             const response = await apodResponse.json();
             for (let i = 0; i < response.length; i++) {
                 const data = [response[i].date, response[i].title, response[i].url, response[i].explanation];
